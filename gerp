@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#grep -rn --color=always --exclude=cscope.out --exclude=tags "$@" |
-git grep -n --color=always "$@" |
+grep -rn --color=always --exclude=cscope.out --exclude=tags "$@" |
+#git grep -n --color=always "$@" |
   awk '{
          line=$0;
          ORS="";
@@ -21,7 +21,7 @@ git grep -n --color=always "$@" |
              print("vim " a[1] " +" a[2] " ;# ");
              print(a[3]);
              for(i=4;i<n+1;i++){
-               print(":" a[i])
+               print("-" a[i])
              }
              print("\n");
          }
