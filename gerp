@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#grep -rn --color=always --exclude=cscope.out --exclude=tags "$@" |
+git grep -n --color=always "$@" |
+  awk '{
+         line=$0;
+         if (line ~/[a-z].?.?.?.?.?.?.?.?.?.?.?.?.?.?:.?.?.?.?.?.?.?.?.?.?.?.?.?.?[0-9]+.?.?.?.?.?.?.?.?.?.?.?.?.?.?:/)
+         {
+           n=split(line, a, ":");
+           printf("vim " a[1] " +" a[2] " ;# ");
+           printf(a[3]);
+           for(i=4;i<n+1;i++){
+             printf(":" a[i])
+           }
+           printf("\n");
+         }
+         else if (line ~/[a-z].?.?.?.?.?.?.?.?.?.?.?.?.?.?-.?.?.?.?.?.?.?.?.?.?.?.?.?.?[0-9]+.?.?.?.?.?.?.?.?.?.?.?.?.?.?-/)
+         {
+             n=split(line, a, "-");
+             printf("vim " a[1] " +" a[2] " ;# ");
+             printf(a[3]);
+             for(i=4;i<n+1;i++){
+               printf(":" a[i])
+             }
+             printf("\n");
+         }
+         else
+         {
+             printf(line "\n");
+         };
+       }';
