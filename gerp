@@ -4,28 +4,29 @@
 git grep -n --color=always "$@" |
   awk '{
          line=$0;
+         ORS="";
          if (line ~/[a-z].?.?.?.?.?.?.?.?.?.?.?.?.?.?:.?.?.?.?.?.?.?.?.?.?.?.?.?.?[0-9]+.?.?.?.?.?.?.?.?.?.?.?.?.?.?:/)
          {
            n=split(line, a, ":");
-           printf("vim " a[1] " +" a[2] " ;# ");
-           printf(a[3]);
+           print("vim " a[1] " +" a[2] " ;# ");
+           print(a[3]);
            for(i=4;i<n+1;i++){
-             printf(":" a[i])
+             print(":" a[i])
            }
-           printf("\n");
+           print("\n");
          }
          else if (line ~/[a-z].?.?.?.?.?.?.?.?.?.?.?.?.?.?-.?.?.?.?.?.?.?.?.?.?.?.?.?.?[0-9]+.?.?.?.?.?.?.?.?.?.?.?.?.?.?-/)
          {
              n=split(line, a, "-");
-             printf("vim " a[1] " +" a[2] " ;# ");
-             printf(a[3]);
+             print("vim " a[1] " +" a[2] " ;# ");
+             print(a[3]);
              for(i=4;i<n+1;i++){
-               printf(":" a[i])
+               print(":" a[i])
              }
-             printf("\n");
+             print("\n");
          }
          else
          {
-             printf(line "\n");
+             print(line "\n");
          };
        }';
