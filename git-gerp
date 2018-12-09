@@ -1,33 +1,17 @@
 #!/bin/bash
 
-# Sets temporary colors so that awk can match with an reasonably unabigous and fast regex
+# git
+# -c
+# Sets temporary grep colors to make a reasonably unabigous and fast regex match possible
+
+# git grep
+# -n     Prefix the line number to matching lines.
+
+# sed:
+# -E     use extended regular expressions in the script
+# The car crash-like regex is grouped like this
+#   (start&sepcolor)(sep)(3numbercolor&number&sepcolor)sep
+# ... where sep is : or -
 
 git -c color.grep.separator=cyan -c color.grep.linenumber=green grep -n --color=always "$@" |
-  awk '{
-         line=$0;
-         ORS="";
-         if (line ~/\033\[36m:\033\[m\033\[32m[0-9]+\033\[m\033\[36m:/)
-         {
-           n=split(line, a, ":");
-           print("vim " a[1] " +" a[2] " ;# ");
-           print(a[3]);
-           for(i=4;i<n+1;i++){
-             print(":" a[i])
-           }
-           print("\n");
-         }
-         else if (line ~/\033\[36m-\033\[m\033\[32m[0-9]+\033\[m\033\[36m-/)
-         {
-             n=split(line, a, "-");
-             print("vim " a[1] " +" a[2] " ;# ");
-             print(a[3]);
-             for(i=4;i<n+1;i++){
-               print("-" a[i])
-             }
-             print("\n");
-         }
-         else
-         {
-             print(line "\n");
-         };
-       }';
+  sed -E 's/(.*\[36m)([:-])(\[m\[32m[0-9]+\[m\[36m)\2/vim \1 +\3 ;#/g'
