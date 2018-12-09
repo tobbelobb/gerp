@@ -1,7 +1,8 @@
 #!/bin/bash
 
+# |& pipes both stdout and stderr
+
 make "$@" |&
-#git grep -n --color=always "$@" |
   awk '{
          line=$0;
          ORS="";
