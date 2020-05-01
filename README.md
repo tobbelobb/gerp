@@ -25,3 +25,19 @@ vim SomeFile.h +42 ;#     void baaz();
 Triple-click with the mouse on an output line to mark the whole line, middle click your mouse to paste, and hit return to open the file on the right line with vim.
 
 The flags `-A`, `-B`, and `-C` are supported.
+
+## find
+In the same spirit, if you do a lot of
+```bash
+find . -name <somefile>
+```
+and frequently copy-paste the file name into
+```bash
+vim <somepath>/<somefile>
+```
+Then f will save you some key presses. Usage might look like:
+```bash
+$ f somefile
+vim ./path1/to/somefile
+vim ./path2/to/somefile
+```
