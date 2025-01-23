@@ -2,7 +2,7 @@
 
 # |& pipes both stdout and stderr
 
-make "$@" |&
+unbuffer make "$@" |&
   awk '{
          line=$0;
          ORS="";
