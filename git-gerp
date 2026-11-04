@@ -12,6 +12,8 @@
 # The car crash-like regex is grouped like this
 #   (start&sepcolor)(sep)(3numbercolor&number&sepcolor)sep
 # ... where sep is : or -
+# Anchor the substitution and run it once per line so long result lines are not
+# repeatedly rescanned after their filename and line number have been formatted.
 
 git -c color.grep.separator=cyan -c color.grep.linenumber=green grep -n --color=always "$@" |
-  sed -E 's/(.*\[36m)([:-])(\[m\[32m[0-9]+\[m\[36m)\2/vim \1 +\3 ;#/g'
+  sed -E 's/^(.*\[36m)([:-])(\[m\[32m[0-9]+\[m\[36m)\2/vim \1 +\3 ;#/'
